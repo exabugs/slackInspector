@@ -43,7 +43,6 @@ function build(template, target, message) {
       break;
     case "ASSESSMENT_RUN_STATE_CHANGED":
       buff.push(message.newstate);
-      buff = null; // 通知しない
       break;
     default:
       buff = null; // 通知しない
