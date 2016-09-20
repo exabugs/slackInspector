@@ -109,3 +109,14 @@ var finding_sample = {
   "userAttributes": []
 };
 
+var template_sample = {
+  "createdAt": "2016-09-18T00:02:12.228Z",
+  "userAttributesForFindings": [],
+  "rulesPackageArns": [
+    "arn:aws:inspector:ap-northeast-1:406045910587:rulespackage/0-bBUQnxMq"
+  ],
+  "durationInSeconds": 900,
+  "assessmentTargetArn": "arn:aws:inspector:ap-northeast-1:663889673734:target/0-e23PBIlz",
+  "name": "test_16",
+  "arn": "arn:aws:inspector:ap-northeast-1:663889673734:target/0-e23PBIlz/template/0-EEEDd3pP"
+};
