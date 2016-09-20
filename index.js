@@ -36,8 +36,10 @@ function build(template, target, finding, message) {
 
   switch (message.event) {
     case "FINDING_REPORTED":
+      buff.push("```");
       buff.push("[" + finding.severity + "] " + finding.id);
       buff.push(finding.title);
+      buff.push("```");
       break;
     case "ASSESSMENT_RUN_STARTED":
     case "ASSESSMENT_RUN_COMPLETED":
