@@ -17,7 +17,7 @@ const https = require('https');
 //
 // Slack message format.
 //
-function build(template, target, message) {
+function build(template, target, finding, message) {
 
   var events = {
     "ASSESSMENT_RUN_STARTED": "実行開始",
@@ -36,7 +36,8 @@ function build(template, target, message) {
 
   switch (message.event) {
     case "FINDING_REPORTED":
-      buff.push(message.finding);
+      buff.push("[" + finding.severity + "] " + finding.id);
+      buff.push(finding.title);
       break;
     case "ASSESSMENT_RUN_STARTED":
     case "ASSESSMENT_RUN_COMPLETED":
@@ -71,12 +72,17 @@ exports.handler = function (event, context, callback) {
     }).promise(),
     inspector.describeAssessmentTargets({
       assessmentTargetArns: pluck(messages, "target")
+    }).promise(),
+    inspector.describeFindings({
+      findingArns: pluck(messages, "finding", "")
     }).promise()
   ]).then(function (result) {
     var templates = result[0].assessmentTemplates;
     var targets = result[1].assessmentTargets;
+    var findings = result[2].findings;
     return Promise.all(messages.map(function (message, idx) {
-      var text = build(templates[idx], targets[idx], message);
+      var text = build(templates[idx], targets[idx], findings[idx], message);
+      console.log(text);
       return text && request({text: text});
     }));
   }).then(function () {
@@ -113,8 +119,8 @@ function request(data) {
 
 // utility
 
-function pluck(array, propertyName) {
+function pluck(array, propertyName, _default) {
   return array.map(function (v) {
-    return v[propertyName];
+    return v[propertyName] !== undefined ? v[propertyName] : _default;
   });
 }
