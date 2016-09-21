@@ -99,7 +99,7 @@ exports.handler = function (event, context, callback) {
 // Slack
 //
 function request(data) {
-  return new Promise(function (resolve) {
+  return new Promise(function (resolve, reject) {
     var body = JSON.stringify(data);
 
     var req = https.request({
@@ -111,11 +111,10 @@ function request(data) {
         'Content-Type': 'application/json; charser=UTF-8',
         "Content-Length": Buffer.byteLength(body)
       }
+    }, function (res) {
+      res.statusCode === 200 ? resolve(res) : reject(res);
     });
-
-    req.end(body, function (err) {
-      resolve(err);
-    });
+    req.end(body);
   });
 }
 
