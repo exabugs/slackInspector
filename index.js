@@ -22,8 +22,8 @@ function build(template, target, finding, message) {
   var events = {
     "ASSESSMENT_RUN_STARTED": "実行開始",
     "ASSESSMENT_RUN_COMPLETED": "実行完了",
-    "ASSESSMENT_RUN_STATE_CHANGED": "実行ステータスが変更されました",
-    "FINDING_REPORTED": "報告された結果"
+    "ASSESSMENT_RUN_STATE_CHANGED": "実行ステータス変更",
+    "FINDING_REPORTED": "結果報告"
   };
 
   var buff = [
